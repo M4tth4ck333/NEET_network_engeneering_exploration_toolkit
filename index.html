@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEET-OS: Eine Neue Digitale Realität</title>
-    <!-- Tailwind CSS CDN für schnelles Styling -->
+    <title>NEET-OS: Eine Neue Digitale Realität mit Tesseract-Interface</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         /* Grundlegende Schriftart für das gesamte Dokument */
         body {
             font-family: 'Inter', sans-serif;
+            margin: 0; /* Entfernt Standard-Body-Margin */
+            overflow-x: hidden; /* Verhindert horizontale Scrollbalken */
         }
         /* Zusätzliches Styling für Icons, falls benötigt */
         .icon {
@@ -17,30 +19,44 @@
             margin-right: 0.25rem;
             vertical-align: middle;
         }
+        /* Stil für den Tesseract-Container, um ihn sichtbar zu machen */
+        #tesseract-container {
+            width: 100%;
+            height: 60vh; /* 60% der Viewport-Höhe für die Animation */
+            background-color: #0d1117; /* Dunkler Hintergrund für den 3D-Canvas */
+            position: relative; /* Wichtig für die Platzierung des Canvas */
+            overflow: hidden; /* Verhindert Scrollbalken innerhalb des Containers */
+            border-radius: 0.5rem; /* Abgerundete Ecken, passend zu Tailwind */
+            box-shadow: inset 0 0 15px rgba(255, 69, 0, 0.3); /* Dezenter Glüheffekt */
+            margin-bottom: 2.5rem; /* Abstand zum nächsten Abschnitt */
+        }
+        #tesseract-container canvas {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 p-4 sm:p-8 md:p-12 lg:p-16">
-    <!-- Hauptcontainer für den Inhalt -->
     <div class="max-w-7xl mx-auto bg-gray-800 rounded-lg shadow-2xl p-6 sm:p-8 md:p-10 lg:p-12">
 
-        <!-- Titelbereich des OS -->
         <header class="text-center mb-10">
-            <!-- Einfaches Text-Logo anstelle der großen ASCII-Art -->
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-red-400 mb-2">NEET-OS</h1>
             <p class="text-lg sm:text-xl text-gray-400 mb-6">Network Exploration & Engineering Toolkit</p>
 
-            <!-- Philosophische Kernsätze -->
             <div class="space-y-3 text-lg sm:text-xl text-gray-300">
                 <p class="font-semibold text-red-300">"INVERTED NIHILISM" ✨</p>
                 <p class="text-sm sm:text-base">(Sinngebung durch Struktur & gewünschte Manipulation)</p>
-                <p class="font-semibold text-red-300">UNSER PYTHAGORAS: (.c² + .h² = .o³ + .o³ ) 📐🔒📈</p>
+                <p class="font-semibold text-red-300">UNSER PYTHAGORAS: $(.c^2 + .h^2 = .o^3 + .o^3 )$ 📐🔒📈</p>
                 <p class="text-sm sm:text-base">(Konsistenz + Belegbarkeit = Emergent Outcomes)</p>
                 <p class="font-semibold text-red-300">PRIMUS INTER PARES PER ASPERA AD ASTRA 🚀</p>
                 <p class="text-sm sm:text-base">(Der Erste unter Gleichen, durch Mühsal zu den Sternen)</p>
             </div>
         </header>
 
-        <!-- Einleitung und Hauptbeschreibung -->
         <section class="mb-10 p-4 sm:p-6 bg-gray-700 rounded-lg shadow-inner">
             <p class="text-base sm:text-lg leading-relaxed text-gray-200">
                 Das NEET-OS (Network Exploration & Engineering Toolkit) stellt eine innovative Betriebssystemarchitektur dar, die über konventionelle Definitionen hinausgeht. Es wird als ein
@@ -51,7 +67,6 @@
             </p>
         </section>
 
-        <!-- Philosophische und Fundamentale Prinzipien -->
         <section class="mb-10">
             <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Philosophische und Fundamentale Prinzipien:</h2>
             <div class="space-y-6">
@@ -76,13 +91,15 @@
             </div>
         </section>
 
-        <!-- Der Tesseract: Das 4D-Desktop-Interface -->
         <section class="mb-10">
             <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Der Tesseract: Das 4D-Desktop-Interface:</h2>
             <div class="bg-gray-700 p-5 rounded-lg shadow-md space-y-4">
                 <p class="text-base sm:text-lg leading-relaxed text-gray-200">
                     Der Tesseract 🧊 dient als primäre, immersive Benutzeroberfläche des NEET-OS, revolutionär in seiner Konzeption als 4D-Desktop. Er repräsentiert nicht lediglich eine dreidimensionale Projektion, sondern integriert die vierte Dimension als aktiven, manipulierbaren Parameter, wodurch eine grundlegend neue Form der Informationsorganisation und -interaktion ermöglicht wird.
                 </p>
+                
+                <div id="tesseract-container"></div>
+
                 <ul class="list-disc list-inside space-y-2 text-base sm:text-lg text-gray-200">
                     <li>Die visuelle Darstellung dieses Hyperwürfels erfolgt primär mittels **Unreal Engine 5/6** 🎮, einer fortschrittlichen Rendering-Plattform, die fotorealistische und hochinteraktive Umgebungen ermöglicht. In Übergangsphasen oder für spezifische, leichtgewichtige visuelle Effekte kann Compiz 🌈 zur dynamischen visuellen Komposition beitragen, um flüssige Übergänge und eine verbesserte Ästhetik zu gewährleisten.</li>
                     <li>Das Interface präsentiert sich als eine halb offene, kartesische Darstellung eines Würfels, dessen innere Flächen jeweils ein **5x5-Fensterraster** 🔲 umfassen. Dieses Raster ist nicht nur ein Designelement, sondern eine direkte, funktionale Abbildung der **25 Varianzräume**, die als aktive Dimensionen der Datenorganisation und -klassifizierung dienen. Jedes Fenster kann dabei den Zustand und die Metriken eines spezifischen Varianzraums visuell repräsentieren.</li>
@@ -94,14 +111,12 @@
             </div>
         </section>
 
-        <!-- Die Architektur: Von der DNA zum Kosmos -->
         <section class="mb-10">
             <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Die Architektur: Von der DNA zum Kosmos:</h2>
             <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-6">
                 Das <span class="font-semibold text-red-300">NEET-OS</span> ist als <span class="font-semibold text-red-300">Ouroboros-Kernel</span> 🐍 strukturiert, dessen Schichten sich in einem reziproken Verhältnis gegenseitig formen und erhalten, wodurch ein kontinuierlicher Kreislauf der Selbstorganisation und Transformation entsteht:
             </p>
 
-            <!-- Exo-Kernel Sektion -->
             <div class="bg-gray-700 p-5 rounded-lg shadow-md mb-6">
                 <h3 class="text-xl sm:text-2xl font-semibold text-red-300 mb-3">Exo-Kernel:</h3>
                 <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
@@ -109,7 +124,6 @@
                 </p>
             </div>
 
-            <!-- Endo-Kernel Sektion -->
             <div class="bg-gray-700 p-5 rounded-lg shadow-md mb-6">
                 <h3 class="text-xl sm:text-2xl font-semibold text-red-300 mb-3">Endo-Kernel:</h3>
                 <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
@@ -157,7 +171,6 @@
             </div>
         </section>
 
-        <!-- Entwicklungsumgebung Sektion -->
         <section class="mb-10 p-5 bg-gray-700 rounded-lg shadow-md">
             <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Entwicklungsumgebung:</h2>
             <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
@@ -165,11 +178,141 @@
             </p>
         </section>
 
-        <!-- Fußzeile -->
         <footer class="text-center text-gray-500 text-sm mt-10">
             <p>NEET-OS - Network Exploration & Engineering Toolkit</p>
             <p>M4tth4ck333 | MIT License (secundum inter partes)</p>
         </footer>
     </div>
+
+    <script type="module">
+        // JavaScript-Code für die Tesseract-Animation
+        // Direkte Einbettung, um alles in einer Datei zu haben
+
+        // Definition der 16 Eckpunkte eines 4D-Hyperwürfels
+        const vertices4D = [
+            [-1, -1, -1, -1], [ 1, -1, -1, -1], [-1,  1, -1, -1], [ 1,  1, -1, -1],
+            [-1, -1,  1, -1], [ 1, -1,  1, -1], [-1,  1,  1, -1], [ 1,  1,  1, -1],
+            [-1, -1, -1,  1], [ 1, -1, -1,  1], [-1,  1, -1,  1], [ 1,  1, -1,  1],
+            [-1, -1,  1,  1], [ 1, -1,  1,  1], [-1,  1,  1,  1], [ 1,  1,  1,  1]
+        ];
+
+        // Definition der 32 Kanten, die die Eckpunkte verbinden
+        const edges = [
+            [0, 1], [0, 2], [0, 4],
+            [1, 3], [1, 5],
+            [2, 3], [2, 6],
+            [3, 7],
+            [4, 5], [4, 6],
+            [5, 7],
+            [6, 7],
+
+            [8, 9], [8, 10], [8, 12],
+            [9, 11], [9, 13],
+            [10, 11], [10, 14],
+            [11, 15],
+            [12, 13], [12, 14],
+            [13, 15],
+            [14, 15],
+
+            [0, 8], [1, 9], [2, 10], [3, 11],
+            [4, 12], [5, 13], [6, 14], [7, 15]
+        ];
+
+        function project4Dto3D(v4, angleXY, angleZW) {
+            let x = v4[0], y = v4[1], z = v4[2], w = v4[3];
+
+            const newZ = z * Math.cos(angleZW) - w * Math.sin(angleZW);
+            const newW = z * Math.sin(angleZW) + w * Math.cos(angleZW);
+
+            const newX = x * Math.cos(angleXY) - y * Math.sin(angleXY);
+            const newY = x * Math.sin(angleXY) + y * Math.cos(angleXY);
+
+            const perspective = 2.5; 
+            const scale = 1 / (perspective - newW); 
+
+            return new THREE.Vector3(newX * scale, newY * scale, newZ * scale);
+        }
+
+        class TesseractAnimation {
+            constructor(container) {
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true für transparenten Hintergrund
+                
+                this.renderer.setSize(container.clientWidth, container.clientHeight);
+                container.appendChild(this.renderer.domElement);
+
+                this.camera.position.z = 3;
+
+                const material = new THREE.LineBasicMaterial({ color: 0xff4500, linewidth: 2 });
+
+                const points = [];
+                for (let i = 0; i < edges.length * 2; i++) {
+                    points.push(new THREE.Vector3(0, 0, 0));
+                }
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                
+                this.tesseractLines = new THREE.LineSegments(geometry, material);
+                this.scene.add(this.tesseractLines);
+
+                // Speichert eine Referenz auf den Container, um die Größe dynamisch anzupassen
+                this.container = container; 
+
+                window.addEventListener('resize', this.onWindowResize.bind(this), false);
+            }
+
+            onWindowResize() {
+                this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+            }
+
+            animate = () => { // Verwende eine Arrow Function, um 'this' korrekt zu binden
+                requestAnimationFrame(this.animate);
+
+                this.angle = (this.angle || 0) + 0.005; // Initialisiert 'angle' falls noch nicht geschehen
+
+                const positions = [];
+                
+                edges.forEach(edge => {
+                    const v1_4D = vertices4D[edge[0]];
+                    const v2_4D = vertices4D[edge[1]];
+
+                    const p1_3D = project4Dto3D(v1_4D, this.angle, this.angle * 0.7);
+                    const p2_3D = project4Dto3D(v2_4D, this.angle, this.angle * 0.7);
+
+                    positions.push(p1_3D.x, p1_3D.y, p1_3D.z);
+                    positions.push(p2_3D.x, p2_3D.y, p2_3D.z);
+                });
+
+                this.tesseractLines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+                this.tesseractLines.geometry.attributes.position.needsUpdate = true;
+
+                this.renderer.render(this.scene, this.camera);
+            }
+
+            start() {
+                this.animate();
+            }
+
+            stop() {
+                if (this.animationFrameId) {
+                    cancelAnimationFrame(this.animationFrameId);
+                    this.animationFrameId = null;
+                }
+            }
+        }
+
+        // Starten der Tesseract-Animation, sobald das DOM geladen ist
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('tesseract-container');
+            if (container) {
+                const tesseract = new TesseractAnimation(container);
+                tesseract.start();
+            } else {
+                console.error('Container element for Tesseract animation not found!');
+            }
+        });
+    </script>
 </body>
 </html>
