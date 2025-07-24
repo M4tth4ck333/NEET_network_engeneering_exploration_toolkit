@@ -1,0 +1,302 @@
+<!-- src/tesseract-ui/public/index.html -->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEET-OS Sphärisches Klassenzimmer</title>
+    <!-- Tailwind CSS für schnelles Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a1a1a;
+            color: #00ff00;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #000;
+            border: 1px solid #00ffff;
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        h1, h2 {
+            color: #00ffff;
+        }
+        .data-table-container {
+            background-color: #0d0d0d;
+            border: 1px solid #ff00ff;
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 1rem;
+            overflow-x: auto; /* Für responsive Tabellen */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #4a4a4a;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        th {
+            background-color: #2a2a2a;
+            color: #00ffff;
+        }
+        tr:nth-child(even) {
+            background-color: #1f1f1f;
+        }
+        .status-message {
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .status-success { background-color: #003300; color: #00ff00; }
+        .status-error { background-color: #330000; color: #ff0000; }
+        .status-info { background-color: #000033; color: #00ffff; }
+    </style>
+</head>
+<body class="p-5">
+    <div class="max-w-4xl mx-auto w-full flex flex-col gap-8">
+        <div class="container p-6">
+            <h1 class="text-3xl font-bold text-center mb-6">NEET-OS Sphärisches Klassenzimmer</h1>
+            <p class="text-center text-gray-400 mb-8">Interaktive Datenanalyse und System-Orchestrierung</p>
+
+            <!-- System Status Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">System Status</h2>
+                <div id="system-status" class="bg-gray-900 p-4 rounded-md border border-gray-700">
+                    <p>Lade Systemstatus...</p>
+                </div>
+                <button id="refresh-status-btn" class="action-button mt-4 w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg">
+                    Status aktualisieren
+                </button>
+            </div>
+
+            <!-- Command Execution Section -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">CLI Befehle ausführen</h2>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <input type="text" id="command-input" placeholder="z.B. list devices" class="flex-grow p-3 bg-gray-800 text-green-400 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="execute-command-btn" class="action-button bg-green-700 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg">
+                        Befehl ausführen
+                    </button>
+                </div>
+                <div id="command-output" class="bg-gray-900 p-4 rounded-md border border-gray-700 mt-4 text-sm whitespace-pre-wrap">
+                    Ausgabe hier...
+                </div>
+            </div>
+
+            <!-- Logs Display Section -->
+            <div class="data-table-container mb-8">
+                <h2 class="text-2xl font-semibold mb-4">System Logs</h2>
+                <table id="logs-table" class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Level</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="3" class="text-center text-gray-500">Lade Logs...</td></tr>
+                    </tbody>
+                </table>
+                <button id="refresh-logs-btn" class="action-button mt-4 w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg">
+                    Logs aktualisieren
+                </button>
+            </div>
+
+            <!-- Scan Results Display Section (Example for another data type) -->
+            <div class="data-table-container">
+                <h2 class="text-2xl font-semibold mb-4">Letzte Scan Ergebnisse</h2>
+                <table id="scan-results-table" class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Typ</th>
+                            <th>Ziel</th>
+                            <th>Status</th>
+                            <th>Ergebnisse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="5" class="text-center text-gray-500">Lade Scan Ergebnisse...</td></tr>
+                    </tbody>
+                </table>
+                <button id="refresh-scan-btn" class="action-button mt-4 w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg">
+                    Scan Ergebnisse aktualisieren
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api'; // Oder die IP/Domain Ihres Servers
+        
+        // --- Hilfsfunktionen ---
+        function showStatusMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = message;
+                element.className = `status-message status-${type}`;
+                element.style.display = 'block';
+            }
+        }
+
+        function renderTable(tableId, data) {
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            tableBody.innerHTML = ''; // Vorherige Zeilen löschen
+
+            if (!data || data.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="${document.querySelector(`#${tableId} thead th`).length}" class="text-center text-gray-500">Keine Daten verfügbar.</td></tr>`;
+                return;
+            }
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                // Dynamisch Spalten basierend auf den Headern der Tabelle rendern
+                const headers = Array.from(document.querySelectorAll(`#${tableId} thead th`)).map(th => th.textContent);
+                
+                headers.forEach(headerText => {
+                    const td = document.createElement('td');
+                    let value = row[headerText] !== undefined ? row[headerText] : '';
+                    
+                    // Spezielle Formatierung für JSON-Objekte oder Arrays
+                    if (typeof value === 'object' && value !== null) {
+                        value = JSON.stringify(value, null, 2);
+                    }
+                    td.textContent = value;
+                    tr.appendChild(td);
+                });
+                tableBody.appendChild(tr);
+            });
+        }
+
+        // --- API-Aufrufe und UI-Updates ---
+
+        async function fetchSystemStatus() {
+            const statusDiv = document.getElementById('system-status');
+            statusDiv.textContent = 'Lade Systemstatus...';
+            try {
+                const response = await fetch(`${API_BASE_URL}/system/status`);
+                const result = await response.json();
+                if (result.status === 'success') {
+                    statusDiv.innerHTML = `<pre>${JSON.stringify(result.data, null, 2)}</pre>`;
+                } else {
+                    statusDiv.textContent = `Fehler: ${result.message}`;
+                    statusDiv.classList.add('text-red-500');
+                }
+            } catch (error) {
+                statusDiv.textContent = `API Fehler: ${error.message}`;
+                statusDiv.classList.add('text-red-500');
+                console.error('Fehler beim Abrufen des Systemstatus:', error);
+            }
+        }
+
+        async function fetchLogs() {
+            const tableBody = document.querySelector('#logs-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-gray-500">Lade Logs...</td></tr>`;
+            try {
+                const response = await fetch(`${API_BASE_URL}/logs`);
+                const result = await response.json();
+                if (result.status === 'success') {
+                    renderTable('logs-table', result.data);
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-red-500">Fehler: ${result.message}</td></tr>`;
+                    console.error('Fehler beim Abrufen der Logs:', result.message);
+                }
+            } catch (error) {
+                tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-red-500">API Fehler: ${error.message}</td></tr>`;
+                console.error('Fehler beim Abrufen der Logs:', error);
+            }
+        }
+
+        async function fetchScanResults() {
+            const tableBody = document.querySelector('#scan-results-table tbody');
+            tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-gray-500">Lade Scan Ergebnisse...</td></tr>`;
+            try {
+                const response = await fetch(`${API_BASE_URL}/scan_results`);
+                const result = await response.json();
+                if (result.status === 'success') {
+                    renderTable('scan-results-table', result.data);
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500">Fehler: ${result.message}</td></tr>`;
+                    console.error('Fehler beim Abrufen der Scan Ergebnisse:', result.message);
+                }
+            } catch (error) {
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500">API Fehler: ${error.message}</td></tr>`;
+                console.error('Fehler beim Abrufen der Scan Ergebnisse:', error);
+            }
+        }
+
+        async function executeCommand() {
+            const commandInput = document.getElementById('command-input');
+            const commandOutput = document.getElementById('command-output');
+            const command = commandInput.value.trim();
+
+            if (!command) {
+                commandOutput.textContent = 'Bitte geben Sie einen Befehl ein.';
+                commandOutput.classList.add('text-yellow-500');
+                return;
+            }
+
+            commandOutput.textContent = `Führe Befehl aus: ${command}...`;
+            commandOutput.classList.remove('text-red-500', 'text-green-500', 'text-yellow-500');
+            commandOutput.classList.add('text-blue-400');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/execute_command`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: command })
+                });
+                const result = await response.json();
+
+                if (result.status === 'success' || result.status === 'info' || result.status === 'warning') {
+                    commandOutput.textContent = `[OK]: ${result.message}\n${JSON.stringify(result.payload, null, 2)}`;
+                    commandOutput.classList.remove('text-blue-400');
+                    commandOutput.classList.add('text-green-400');
+                    // Optional: Daten-Displays nach Befehlsausführung aktualisieren
+                    fetchLogs();
+                    fetchSystemStatus();
+                    fetchScanResults();
+                } else {
+                    commandOutput.textContent = `[FEHLER]: ${result.message}\n${JSON.stringify(result.payload, null, 2)}`;
+                    commandOutput.classList.remove('text-blue-400');
+                    commandOutput.classList.add('text-red-500');
+                }
+            } catch (error) {
+                commandOutput.textContent = `[API FEHLER]: ${error.message}`;
+                commandOutput.classList.remove('text-blue-400');
+                commandOutput.classList.add('text-red-500');
+                console.error('Fehler bei der Befehlsausführung:', error);
+            } finally {
+                commandInput.value = ''; // Eingabefeld leeren
+            }
+        }
+
+        // --- Event Listener ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSystemStatus();
+            fetchLogs();
+            fetchScanResults();
+
+            document.getElementById('refresh-status-btn').addEventListener('click', fetchSystemStatus);
+            document.getElementById('refresh-logs-btn').addEventListener('click', fetchLogs);
+            document.getElementById('refresh-scan-btn').addEventListener('click', fetchScanResults);
+            document.getElementById('execute-command-btn').addEventListener('click', executeCommand);
+            document.getElementById('command-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    executeCommand();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
