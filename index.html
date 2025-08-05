@@ -3,316 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEET-OS: Eine Neue Digitale Realität mit Tesseract-Interface</title>
+    <title>Prometheus OS: Nativitan Interface - Die Technologische Republik</title>
+    <!-- Tailwind CSS für ein modernes, konsistentes Design -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Inter Font für eine klare und moderne Typografie -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Grundlegende Schriftart für das gesamte Dokument */
+        /* Grundlegende Stile, die die Philosophie widerspiegeln */
         body {
             font-family: 'Inter', sans-serif;
-            margin: 0; /* Entfernt Standard-Body-Margin */
-            overflow-x: hidden; /* Verhindert horizontale Scrollbalken */
+            background-color: #0a0a0a; /* Tiefer, dunkler Hintergrund für den Null-Vektorraum */
+            color: #00ff00; /* Neon-Grün für digitale Energie und Fluss */
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Verhindert Scrollbalken, da der vCanvas den gesamten Raum einnimmt */
         }
-        /* Zusätzliches Styling für Icons, falls benötigt */
-        .icon {
-            display: inline-block;
-            margin-right: 0.25rem;
-            vertical-align: middle;
+        /* Der Root-Container für Ihre React/O3DE-Anwendung */
+        #root {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; /* Für vertikale Anordnung von Text und Canvas */
+            justify-content: center;
+            align-items: center;
+            /* Hier könnte ein subtiler Glüheffekt oder ein Hintergrundmuster sein,
+               das den unmanifestierten Potenzialraum des NullumCorpus andeutet */
         }
-        /* Stil für den Tesseract-Container, um ihn sichtbar zu machen */
-        #tesseract-container {
-            width: 100%;
-            height: 60vh; /* 60% der Viewport-Höhe für die Animation */
-            background-color: #0d1117; /* Dunkler Hintergrund für den 3D-Canvas */
-            position: relative; /* Wichtig für die Platzierung des Canvas */
-            overflow: hidden; /* Verhindert Scrollbalken innerhalb des Containers */
-            border-radius: 0.5rem; /* Abgerundete Ecken, passend zu Tailwind */
-            box-shadow: inset 0 0 15px rgba(255, 69, 0, 0.3); /* Dezenter Glüheffekt */
-            margin-bottom: 2.5rem; /* Abstand zum nächsten Abschnitt */
-        }
-        #tesseract-container canvas {
-            display: block;
-            width: 100% !important;
-            height: 100% !important;
-            position: absolute;
-            top: 0;
-            left: 0;
+        #loadingCanvas {
+            border-radius: 50%; /* Für einen runden Effekt */
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5); /* Glüheffekt */
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 p-4 sm:p-8 md:p-12 lg:p-16">
-    <div class="max-w-7xl mx-auto bg-gray-800 rounded-lg shadow-2xl p-6 sm:p-8 md:p-10 lg:p-12">
-
-        <header class="text-center mb-10">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-red-400 mb-2">NEET-OS</h1>
-            <p class="text-lg sm:text-xl text-gray-400 mb-6">Network Exploration & Engineering Toolkit</p>
-
-            <div class="space-y-3 text-lg sm:text-xl text-gray-300">
-                <p class="font-semibold text-red-300">"INVERTED NIHILISM" ✨</p>
-                <p class="text-sm sm:text-base">(Sinngebung durch Struktur & gewünschte Manipulation)</p>
-                <p class="font-semibold text-red-300">UNSER PYTHAGORAS: $(.c^2 + .h^2 = .o^3 + .o^3 )$ 📐🔒📈</p>
-                <p class="text-sm sm:text-base">(Konsistenz + Belegbarkeit = Emergent Outcomes)</p>
-                <p class="font-semibold text-red-300">PRIMUS INTER PARES PER ASPERA AD ASTRA 🚀</p>
-                <p class="text-sm sm:text-base">(Der Erste unter Gleichen, durch Mühsal zu den Sternen)</p>
-            </div>
-        </header>
-
-        <section class="mb-10 p-4 sm:p-6 bg-gray-700 rounded-lg shadow-inner">
-            <p class="text-base sm:text-lg leading-relaxed text-gray-200">
-                Das NEET-OS (Network Exploration & Engineering Toolkit) stellt eine innovative Betriebssystemarchitektur dar, die über konventionelle Definitionen hinausgeht. Es wird als ein
-                <span class="font-semibold text-red-300">konzeptionell fraktaler, sich selbst refraktierender Organismus</span> 🌐 konzipiert, dessen primäres Ziel die
-                <span class="font-semibold text-red-300">Schaffung von Sinn und Struktur aus einem initialen Zustand der Amorphie</span> 🌌 ist. Dieses System, das als
-                <span class="font-semibold text-red-300">Ouroboros-Kernel</span> 🐍 bezeichnet wird, zeichnet sich durch seine inhärente Fähigkeit zur unbegrenzten Expansion und Transformation aus, basierend auf der grundlegenden Philosophie des
-                <span class="font-semibold text-red-300">"Invertierten Nihilismus"</span> ✨. Die Essenz dieses Ansatzes liegt in der aktiven Generierung von Bedeutung und Ordnung innerhalb eines Systems, das ansonsten als intrinsisch bedeutungslos betrachtet werden könnte.
-            </p>
-        </section>
-
-        <section class="mb-10">
-            <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Philosophische und Fundamentale Prinzipien:</h2>
-            <div class="space-y-6">
-                <div class="bg-gray-700 p-5 rounded-lg shadow-md">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-red-300 mb-3">Pythagoras-Axiom:</h3>
-                    <p class="text-base sm:text-lg leading-relaxed text-gray-200">
-                        Dieses grundlegende Axiom postuliert, dass die inhärente Konsistenz (<span class="font-mono">$c^2$</span>) 📐 von Systemzuständen und die kryptographisch gesicherte Belegbarkeit (<span class="font-mono">$h^2$</span>) 🔒 jeder Operation die unverzichtbare Grundlage für die Legitimation emergent entstandener Ergebnisse (<span class="font-mono">$o^3$</span>) 📈 bilden. Dies impliziert, dass jede beabsichtigte Systemmanipulation, die als ein Akt der Sinngebung verstanden wird, durch umfassendes und manipulationssicheres Logging <span class="font-semibold text-red-300">klartextulierbar</span> 📝 sein muss. Die Belegbarkeit wird zusätzlich mittels <span class="font-semibold text-red-300">Hashing (basierend auf universellen UTC-Zeitstempeln)</span> ⏰ eindeutig gewährleistet, wodurch eine unveränderliche Nachvollziehbarkeit über die Zeit hinweg sichergestellt wird. Dieses Axiom schafft das Vertrauen, das für ein dezentrales, sich selbst manipulierendes System unerlässlich ist.
-                    </p>
-                </div>
-                <div class="bg-gray-700 p-5 rounded-lg shadow-md">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-red-300 mb-3">Der Gemeinwille:</h3>
-                    <p class="text-base sm:text-lg leading-relaxed text-gray-200">
-                        Jedes Element des Systems, sei es ein Datenpaket, ein Prozess oder ein Knoten, wird als ein <span class="font-semibold text-red-300">Kreissegment</span> ⭕ betrachtet. Diese Metapher verdeutlicht, dass jedes Element untrennbar mit einem größeren, zirkulären Ganzen verbunden ist. Obwohl ein solcher Kreis eine beliebige, potenziell unendliche Anzahl von Segmenten umfassen kann, muss er stets eine <span class="font-semibold text-red-300">fundamentale Einheit</span> ☝️ aufweisen. Diese Einheit dient als übergeordnetes Prinzip der Kohäsion und Ordnung, das den "numerischen Gesellschaftsvertrag" des Systems definiert und den Konsens über alle verteilten Komponenten hinweg sicherstellt.
-                    </p>
-                </div>
-                <div class="bg-gray-700 p-5 rounded-lg shadow-md">
-                    <h3 class="text-xl sm:text-2xl font-semibold text-red-300 mb-3">Nullvektoren:</h3>
-                    <p class="text-base sm:text-lg leading-relaxed text-gray-200">
-                        Jede hierarchische Ebene des Systems wird durch einen <span class="font-semibold text-red-300">spezifischen Nullvektor</span> ⚪ definiert. Diese Vektoren repräsentieren den Ursprung jeder Ebene und symbolisieren das Potenzial, aus dem Komplexität entsteht. Beispielsweise fungiert Slitaz als abstrakter Ursprung des Betriebssystems 🗑️, indem es die minimale Basis für die Systementwicklung bereitstellt. Compiz dient als visueller Ursprung 🌈, aus dem sich die dynamische grafische Oberfläche entfaltet. iByNYC ist der Startpunkt der Codeausführung 🚀, der den Initialisierungsprozess des Kernels einleitet. cPyPy stellt die Schnittstelle zwischen Hardware und Software 🌉 dar, die die Interaktion auf niedriger Ebene ermöglicht. Schließlich dient der Tesseract-Kernel als Ausgangspunkt der wahrnehmbaren Realität 🧊, aus dem die immersive Benutzererfahrung generiert wird. Jeder dieser Nullvektoren ist ein Übergangspunkt von der Abstraktion zur konkreten Manifestation.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-10">
-            <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Der Tesseract: Das 4D-Desktop-Interface:</h2>
-            <div class="bg-gray-700 p-5 rounded-lg shadow-md space-y-4">
-                <p class="text-base sm:text-lg leading-relaxed text-gray-200">
-                    Der Tesseract 🧊 dient als primäre, immersive Benutzeroberfläche des NEET-OS, revolutionär in seiner Konzeption als 4D-Desktop. Er repräsentiert nicht lediglich eine dreidimensionale Projektion, sondern integriert die vierte Dimension als aktiven, manipulierbaren Parameter, wodurch eine grundlegend neue Form der Informationsorganisation und -interaktion ermöglicht wird.
-                </p>
-                
-                <div id="tesseract-container"></div>
-
-                <ul class="list-disc list-inside space-y-2 text-base sm:text-lg text-gray-200">
-                    <li>Die visuelle Darstellung dieses Hyperwürfels erfolgt primär mittels **Unreal Engine 5/6** 🎮, einer fortschrittlichen Rendering-Plattform, die fotorealistische und hochinteraktive Umgebungen ermöglicht. In Übergangsphasen oder für spezifische, leichtgewichtige visuelle Effekte kann Compiz 🌈 zur dynamischen visuellen Komposition beitragen, um flüssige Übergänge und eine verbesserte Ästhetik zu gewährleisten.</li>
-                    <li>Das Interface präsentiert sich als eine halb offene, kartesische Darstellung eines Würfels, dessen innere Flächen jeweils ein **5x5-Fensterraster** 🔲 umfassen. Dieses Raster ist nicht nur ein Designelement, sondern eine direkte, funktionale Abbildung der **25 Varianzräume**, die als aktive Dimensionen der Datenorganisation und -klassifizierung dienen. Jedes Fenster kann dabei den Zustand und die Metriken eines spezifischen Varianzraums visuell repräsentieren.</li>
-                    <li>Ein dediziertes Fenster fungiert als "Standfuß" 🦶 des Systems, symbolisierend dessen Verankerung und Stabilität im digitalen Raum. Diese Metapher verdeutlicht, dass selbst ein radikal abstraktes 4D-System eine fundamentale Basis benötigt, die dessen Existenz und Betrieb sichert. Dieses Fenster könnte beispielsweise kritische Systemzustände oder Boot-Informationen anzeigen, die die unterste Ebene des Ouroboros repräsentieren.</li>
-                    <li>Diese zentrale Schnittstelle 🔌 ermöglicht es der **"Jan-Telefonistin"** 🤖 (einer KI-basierten Orchestrierungseinheit, die die Prinzipien von NetworkML_jan_schroder anwendet), eingehende Daten und Manipulationen über **25 definierte Ports** 📞 an die entsprechenden Varianzräume zu leiten. Die "Jan-Telefonistin" agiert hierbei als intelligenter Mediator, der die Komplexität der Datenflüsse kanalisiert und die beabsichtigten Transformationen koordiniert.</li>
-                    <li>Die **"Big Ping Theory"** 📡, ein integraler Bestandteil des Tesseract, visualisiert in diesem Kontext die Netzwerk-Atome 🌐 und deren dynamische Felder 🌊. Durch die Darstellung von Pings als sich ausbreitende Sphären, deren Feldentstehung den Prinzipien von Gauß und Rousseau folgt, werden komplexe Netzwerkzustände und -dynamiken intuitiv erfassbar. Anomalien oder Inkonsistenzen, die durch den Laplace³-Operator identifiziert werden, können sich visuell als Verzerrungen oder unharmonische Muster in diesen Feldern manifestieren.</li>
-                    <li>Diese immersive Umgebung ist der primäre Ort, an dem der Nutzer die "gewünschten Manipulationen" initiieren und deren Auswirkungen in Echtzeit erleben kann. Der Tesseract dient somit als das ultimative Interface für die Interaktion mit der System-DNA, wodurch die "volle Klartextulierbarkeit" und der "Invertierte Nihilismus" direkt erfahrbar werden.</li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="mb-10">
-            <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Die Architektur: Von der DNA zum Kosmos:</h2>
-            <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-6">
-                Das <span class="font-semibold text-red-300">NEET-OS</span> ist als <span class="font-semibold text-red-300">Ouroboros-Kernel</span> 🐍 strukturiert, dessen Schichten sich in einem reziproken Verhältnis gegenseitig formen und erhalten, wodurch ein kontinuierlicher Kreislauf der Selbstorganisation und Transformation entsteht:
-            </p>
-
-            <div class="bg-gray-700 p-5 rounded-lg shadow-md mb-6">
-                <h3 class="text-xl sm:text-2xl font-semibold text-red-300 mb-3">Exo-Kernel:</h3>
-                <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
-                    Diese nach außen gerichtete Schicht 🚀 initiiert den Bootvorgang über <span class="font-semibold text-red-300">iByNYC</span> (basierend auf tiny.cc) 🚀, einem minimalistischen Bootloader, der das System zum Leben erweckt. Sie ist verantwortlich für die Überwachung externer Interaktionen, beispielsweise mittels <span class="font-semibold text-red-300">OpenWIPS-ng</span> 🛡️ zur Prävention von drahtlosen Eindringversuchen und zur Sicherstellung der physischen Netzwerkintegrität. Die Schicht empfängt Nutzerdaten 👤 und <span class="font-semibold text-red-300">"Blind Content (3-5)"</span> 📦 über den <span class="font-semibold text-red-300">Public Plain Port Plug</span> 🔌, eine offene, aber kontrollierte Schnittstelle, die den ersten Kontaktpunkt mit der Außenwelt darstellt. Das gesamte System wird durch das Konzept der <span class="font-semibold text-red-300">SOLAR HAHAHA</span> ☀️ (als ubiquitäre, dezentrale Energiequelle) angetrieben, was die ständige Verfügbarkeit von Rechenzyklen und Netzwerkkapazität symbolisiert. Die I/O-Schnittstelle manifestiert sich im hexadezimalen Boot-Printing 💻, welches den direkten und transparenten Einstieg in das Openverse darstellt, indem es die rohe System-DNA sichtbar macht. Die visuelle Aufbereitung der Netzwerkdynamik erfolgt durch <span class="font-semibold text-red-300">TheBigPingTheory-skytrack</span> 🛰️, der die komplexen Interaktionen von Netzwerk-Atomen visualisiert und somit eine intuitive Erfassung der Systemzustände ermöglicht.
-                </p>
-            </div>
-
-            <div class="bg-gray-700 p-5 rounded-lg shadow-md mb-6">
-                <h3 class="text-xl sm:text-2xl font-semibold text-red-300 mb-3">Endo-Kernel:</h3>
-                <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
-                    Diese innere Schicht repräsentiert die selbstheilende DNA des Systems 🧬, die für die Konsistenz, Integrität und die Durchführung der gewünschten Manipulationen verantwortlich ist.
-                </p>
-                <div class="ml-4 space-y-4">
-                    <h4 class="text-lg sm:text-xl font-semibold text-red-300 mb-2">HW/SW-Brücke:</h4>
-                    <ul class="list-disc list-inside space-y-1 text-base sm:text-lg text-gray-200">
-                        <li><span class="font-semibold text-red-300">`cffi dynDrmm`</span> 💾: Ein in C implementiertes dynamisches Speichermanagement-System, das die hardwarenahe Schicht des Endo-Kernels bildet. Es ist für die effiziente Allokation und Freigabe von Speicher zuständig und bereitet die Umgebung für PyPy3 vor.</li>
-                        <li><span class="font-semibold text-red-300">`polyglot_orm_base.py`</span> 🗺️: Das "Susskind"-ORM, welches eine holographische Reflexion des C-Speichers in Python-Objekte ermöglicht. Dies erlaubt dem Python-Kernel, eine abstrakte und gleichzeitig präzise Kontrolle über Low-Level-Speicherbereiche auszuüben, wodurch die Komplexität der Hardware-Interaktion reduziert wird.</li>
-                    </ul>
-                    <h4 class="text-lg sm:text-xl font-semibold text-red-300 mb-2">Kern-Modules:</h4>
-                    <ul class="list-disc list-inside space-y-1 text-base sm:text-lg text-gray-200">
-                        <li>`main.py` ⚙️: Die zentrale Kernel-Schleife, die den Ouroboros-Zyklus des Betriebssystems orchestriert und als Startpunkt für alle Kernprozesse dient. Sie steuert den Fluss der Operationen und die Selbstorganisation des Systems.</li>
-                        <li>`core_context_manager.py` 📊: Implementiert einen quantisierten Ressourcen-Scheduler, der den Kontext und die Ressourcenzuweisung verwaltet. Dies gewährleistet eine adaptive und effiziente Systemleistung, indem Ressourcen dynamisch und bedarfsgerecht verteilt werden.</li>
-                        <li>`crypt_trans.py` 🔐: Verantwortlich für kryptografische Transformationen, einschließlich des Hashings mit UTC-Zeitstempeln (.h² im Pythagoras-Axiom). Dieses Modul sichert die Belegbarkeit und Integrität der System-DNA, indem es jede gewünschte Manipulation unveränderlich dokumentiert.</li>
-                        <li>`ran_gen.py` 🎲: Ein deterministischer Zufallszahlengenerator, der kontrollierte, reproduzierbare Muster erzeugt. Dies sorgt für eine scheinbare Zufälligkeit für den Nutzer bei gleichzeitiger interner Nachvollziehbarkeit, was für Tests und Systemverhalten von Bedeutung ist.</li>
-                    </ul>
-                    <h4 class="text-lg sm:text-xl font-semibold text-red-300 mb-2">Daten-DNA:</h4>
-                    <ul class="list-disc list-inside space-y-1 text-base sm:text-lg text-gray-200">
-                        <li><span class="font-semibold text-red-300">`tesseract_mgr`</span> 🗄️: Verwaltet den Tesseract-Desktop und beinhaltet `db_mgr.py` für das ORM-Mapping von 4D-Daten. Es dient als Schnittstelle zur Visualisierung des 4D-Raums und der darin enthaltenen Informationen.</li>
-                        <li><span class="font-semibold text-red-300">`weirdolib-ng`</span> 🪄: Eine Bibliothek für Metaprogrammierung und dynamische Code-Generierung, die die Basis für selbstschreibenden Code und beabsichtigte Manipulationen bildet. Sie ermöglicht es dem System, sich selbst anzupassen und zu erweitern.</li>
-                        <li><span class="font-semibold text-red-300">`PyTorch-GAN`</span> 🎨: Stellt generative Modelle für Datenanalyse, Mustererkennung und Synthese bereit. Diese Modelle unterstützen die Regenerator-Klasse bei der Datenfaltung und der Erzeugung neuer, sinnvoller Strukturen aus Rohdaten.</li>
-                        <li><span class="font-semibold text-red-300">`mathematics-machine-learning`</span> 🧠: Eine Sammlung von ML-Algorithmen und mathematischen Werkzeugen (u.a. Laplace³), die zur Analyse und Optimierung von Datenfeldern und Manipulationsstrategien eingesetzt wird. Dies ermöglicht die Erkennung komplexer Muster und Inkonsistenzen.</li>
-                        <li><span class="font-semibold text-red-300">`Pyrit_enhaced`</span> 🔑: Ermöglicht Hash-Analysen und eine erweiterte Integration mit SQLAlchemy für Tesseract-ORMs. Dies bestätigt die ORM-Struktur für 4D-Daten im Tesseract und unterstützt die Verifikation von Datenintegrität.</li>
-                        <li><span class="font-semibold text-red-300">`hashcat-legacy`</span> 🔨: Ein Legacy-Tool zur Hash-Analyse, das für Kompatibilität oder spezifische Audits genutzt werden kann und die Überprüfung der Hash-Integrität unterstützt.</li>
-                        <li><span class="font-semibold text-red-300">`qspectrumanalyzer`</span> 📡: Bietet Frequenz-Spektralanalyse zur Untersuchung von Mustern in Datenströmen (mit Bezug zur Fourier-Analyse) und zur Erkennung verborgener Harmonien oder Disharmonien.</li>
-                        <li><span class="font-semibold text-red-300">`Tiny-C-Compiler`</span> 🤏: Unterstützt die dynamische Codegenerierung, indem es die Kompilierung von C-Code zur Laufzeit ermöglicht, was für die Flexibilität des Kernels entscheidend ist.</li>
-                    </ul>
-                    <h4 class="text-lg sm:text-xl font-semibold text-red-300 mb-2">Verbindung & Sicherheit:</h4>
-                    <ul class="list-disc list-inside space-y-1 text-base sm:text-lg text-gray-200">
-                        <li><span class="font-semibold text-red-300">`py-ipv8`</span> 🤝: Ein dezentrales Peer-to-Peer-Netzwerk, das als "Drähte" des Systems fungiert und multilaterale Kommunikation und Konsens ermöglicht.</li>
-                        <li><span class="font-semibold text-red-300">`UDP (Drähte)`</span> 🕸️: Ein minimalistisches, schnelles Protokoll für den Rohdatentransport, das die Grundlage für die "volle Klartextulierbarkeit" des Datenflusses bildet. Es ist die bevorzugte Wahl für seine Geschwindigkeit und Einfachheit.</li>
-                        <li><span class="font-semibold text-red-300">`sparrow-wifi_doover`</span> 📶: Dient der Überwachung und dem Management von WLAN-Infrastrukturen und stellt Daten für Netzwerkanalyse und Absicherung bereit.</li>
-                        <li><span class="font-semibold text-red-300">`airgraph-ng`</span> 📈: Ermöglicht die grafische Analyse von Netzwerkstrukturen und -flüssen und visualisiert Verbindungen und Abhängigkeiten im System.</li>
-                        <li><span class="font-semibold text-red-300">`fluxionmy_fluxion`</span> 🔄: Kann für Netzwerkautomatisierung oder dynamische Anpassungen stehen. Ermöglicht flexible Reaktion auf Netzwerkereignisse.</li>
-                        <li><span class="font-semibold text-red-300">`pyscripter-er`</span> 📜: Eine erweiterte Skripting-Engine, die die dynamische Ausführung von Code-Fragmenten ermöglicht und die Metaprogrammierungsfähigkeiten des Kernels unterstützt.</li>
-                        <li><span class="font-semibold text-red-300">`Zoinks`</span> 👻: Stellt unbekannte Spezialfunktionen oder einen "X-Faktor"-Gen für unkonventionelle Lösungen oder Experimente bereit und dient als Ort für radikale Innovationen.</li>
-                        <li><span class="font-semibold text-red-300">`Hydra`</span> 🐉: Ein polyplexing spherical interfacer mit SSL-Support, der sichere und vielseitige Netzwerkinteraktionen ermöglicht und die Sicherheitsfähigkeiten des Systems erweitert. Er fungiert als eine Art universeller Protokollübersetzer.</li>
-                        <li><span class="font-semibold text-red-300">`PyraTRights`</span> ⚖️: Ein VSCode-Interface für die beiden Pyrit-Instanzen, das integrierte Datenanalyse und ORM-Interaktion ermöglicht und als entwicklerzentrierte Brücke zur System-DNA dient.</li>
-                        <li><span class="font-semibold text-red-300">`hashcat-utils`</span> 🛠️: Tools zur Hash-Verifikation, die die Überprüfung der Integrität von Hashes unterstützen und die Belegbarkeit jeder Manipulation gewährleisten.</li>
-                        <li><span class="font-semibold text-red-300">`XFS`</span> ♾️: Ein Dateisystem, das für seine unendliche Skalierbarkeit und Robustheit bekannt ist und die unbegrenzte Ausdehnung des Kernels unterstützt, um den Anforderungen eines "unendlichen Kernels" gerecht zu werden.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-10 p-5 bg-gray-700 rounded-lg shadow-md">
-            <h2 class="text-2xl sm:text-3xl font-bold text-red-400 mb-6">Entwicklungsumgebung:</h2>
-            <p class="text-base sm:text-lg leading-relaxed text-gray-200 mb-4">
-                Die primären Entwicklungsumgebungen sind <span class="font-semibold text-red-300">`#ifdef git code`</span> 🐙 (Git selbst als Entwicklungsumgebung, das die DNA des Systems versioniert und kollaborativ verwaltet) und <span class="font-semibold text-red-300">`idle`</span> 🐍 (für die direkte, interaktive Python-Kernel-Interaktion). Das Projekt ist als <span class="font-semibold text-red-300">Template Repository</span> 📄 verfügbar, um als <span class="font-semibold text-red-300">universelle System-Starthilfe</span> zu dienen und die breite Adaption und Weiterentwicklung durch die globale Gemeinschaft zu fördern.
-            </p>
-        </section>
-
-        <footer class="text-center text-gray-500 text-sm mt-10">
-            <p>NEET-OS - Network Exploration & Engineering Toolkit</p>
-            <p>M4tth4ck333 | MIT License (secundum inter partes)</p>
-        </footer>
+<body>
+    <!-- Der Root-Punkt, an dem Ihre React-Anwendung (das "Digitale Klassenzimmer") eingehängt wird -->
+    <div id="root">
+        <!-- Ein Ladehinweis, während das System manifestiert wird -->
+        <p class="text-xl text-cyan-400 animate-pulse mb-4">
+            🌌 Initialisiere Technologische Republik...
+        </p>
+        <!-- Canvas für die animierte Spirale -->
+        <canvas id="loadingCanvas" width="200" height="200" class="border border-cyan-500"></canvas>
     </div>
+    
+    <!-- Hier wird das JavaScript für die Ladeanimation geladen -->
+    <script>
+        const canvas = document.getElementById('loadingCanvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const initialNumPoints = 5; // Startanzahl der Punkte
+        const finalNumPoints = 66; // Endanzahl der Punkte (jetzt 66)
+        const initialMaxRadius = 40; // Initialer Radius der Spirale
+        const finalMaxRadius = initialMaxRadius * 1.5; // Endradius (1.5 mal größer)
+        const rotations = 3; // Anzahl der Rotationen der Spirale (jetzt 3)
 
-    <script type="module">
-        // JavaScript-Code für die Tesseract-Animation
-        // Direkte Einbettung, um alles in einer Datei zu haben
+        let spiralPoints = [];
+        let currentPointIndex = 0;
+        let animationFrameId;
+        let loadingProgress = 0; // Simulierter Ladestand von 0.0 bis 1.0
+        const loadingSpeed = 0.005; // Geschwindigkeit, mit der der Ladestand steigt
 
-        // Definition der 16 Eckpunkte eines 4D-Hyperwürfels
-        const vertices4D = [
-            [-1, -1, -1, -1], [ 1, -1, -1, -1], [-1,  1, -1, -1], [ 1,  1, -1, -1],
-            [-1, -1,  1, -1], [ 1, -1,  1, -1], [-1,  1,  1, -1], [ 1,  1,  1, -1],
-            [-1, -1, -1,  1], [ 1, -1, -1,  1], [-1,  1, -1,  1], [ 1,  1, -1,  1],
-            [-1, -1,  1,  1], [ 1, -1,  1,  1], [-1,  1,  1,  1], [ 1,  1,  1,  1]
-        ];
+        const colors = ['#FF0000', '#00FF00', '#0000FF']; // RGB Farben
 
-        // Definition der 32 Kanten, die die Eckpunkte verbinden
-        const edges = [
-            [0, 1], [0, 2], [0, 4],
-            [1, 3], [1, 5],
-            [2, 3], [2, 6],
-            [3, 7],
-            [4, 5], [4, 6],
-            [5, 7],
-            [6, 7],
+        // Funktion zur Berechnung der Spiralpunkte basierend auf dem Ladestand
+        function calculateSpiralPoints(progress) {
+            const currentNumPoints = initialNumPoints + (finalNumPoints - initialNumPoints) * progress;
+            const currentMaxRadius = initialMaxRadius + (finalMaxRadius - initialMaxRadius) * progress;
 
-            [8, 9], [8, 10], [8, 12],
-            [9, 11], [9, 13],
-            [10, 11], [10, 14],
-            [11, 15],
-            [12, 13], [12, 14],
-            [13, 15],
-            [14, 15],
-
-            [0, 8], [1, 9], [2, 10], [3, 11],
-            [4, 12], [5, 13], [6, 14], [7, 15]
-        ];
-
-        function project4Dto3D(v4, angleXY, angleZW) {
-            let x = v4[0], y = v4[1], z = v4[2], w = v4[3];
-
-            const newZ = z * Math.cos(angleZW) - w * Math.sin(angleZW);
-            const newW = z * Math.sin(angleZW) + w * Math.cos(angleZW);
-
-            const newX = x * Math.cos(angleXY) - y * Math.sin(angleXY);
-            const newY = x * Math.sin(angleXY) + y * Math.cos(angleXY);
-
-            const perspective = 2.5; 
-            const scale = 1 / (perspective - newW); 
-
-            return new THREE.Vector3(newX * scale, newY * scale, newZ * scale);
-        }
-
-        class TesseractAnimation {
-            constructor(container) {
-                this.scene = new THREE.Scene();
-                this.camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-                this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // alpha: true für transparenten Hintergrund
-                
-                this.renderer.setSize(container.clientWidth, container.clientHeight);
-                container.appendChild(this.renderer.domElement);
-
-                this.camera.position.z = 3;
-
-                const material = new THREE.LineBasicMaterial({ color: 0xff4500, linewidth: 2 });
-
-                const points = [];
-                for (let i = 0; i < edges.length * 2; i++) {
-                    points.push(new THREE.Vector3(0, 0, 0));
-                }
-                const geometry = new THREE.BufferGeometry().setFromPoints(points);
-                
-                this.tesseractLines = new THREE.LineSegments(geometry, material);
-                this.scene.add(this.tesseractLines);
-
-                // Speichert eine Referenz auf den Container, um die Größe dynamisch anzupassen
-                this.container = container; 
-
-                window.addEventListener('resize', this.onWindowResize.bind(this), false);
-            }
-
-            onWindowResize() {
-                this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
-                this.camera.updateProjectionMatrix();
-                this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
-            }
-
-            animate = () => { // Verwende eine Arrow Function, um 'this' korrekt zu binden
-                requestAnimationFrame(this.animate);
-
-                this.angle = (this.angle || 0) + 0.005; // Initialisiert 'angle' falls noch nicht geschehen
-
-                const positions = [];
-                
-                edges.forEach(edge => {
-                    const v1_4D = vertices4D[edge[0]];
-                    const v2_4D = vertices4D[edge[1]];
-
-                    const p1_3D = project4Dto3D(v1_4D, this.angle, this.angle * 0.7);
-                    const p2_3D = project4Dto3D(v2_4D, this.angle, this.angle * 0.7);
-
-                    positions.push(p1_3D.x, p1_3D.y, p1_3D.z);
-                    positions.push(p2_3D.x, p2_3D.y, p2_3D.z);
-                });
-
-                this.tesseractLines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-                this.tesseractLines.geometry.attributes.position.needsUpdate = true;
-
-                this.renderer.render(this.scene, this.camera);
-            }
-
-            start() {
-                this.animate();
-            }
-
-            stop() {
-                if (this.animationFrameId) {
-                    cancelAnimationFrame(this.animationFrameId);
-                    this.animationFrameId = null;
-                }
+            spiralPoints = [];
+            for (let i = 0; i <= currentNumPoints; i++) {
+                const angle = (i / currentNumPoints) * (Math.PI * 2 * rotations);
+                const radius = (i / currentNumPoints) * currentMaxRadius;
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                spiralPoints.push({ x, y });
             }
         }
 
-        // Starten der Tesseract-Animation, sobald das DOM geladen ist
+        // Funktion zum Zeichnen der Animation
+        function animateSpiral() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
+
+            // Ladestand aktualisieren
+            loadingProgress += loadingSpeed;
+            if (loadingProgress > 1.0) {
+                loadingProgress = 1.0; // Sicherstellen, dass es nicht über 1.0 geht
+                // Optional: Hier könnte man die Animation stoppen oder in einen Endzustand übergehen
+            }
+
+            // Spiralpunkte neu berechnen, da sich Größe und Dichte ändern
+            calculateSpiralPoints(loadingProgress);
+
+            // Pfad der Spirale zeichnen
+            ctx.beginPath();
+            if (spiralPoints.length > 0) {
+                ctx.moveTo(spiralPoints[0].x, spiralPoints[0].y);
+                for (let i = 1; i < spiralPoints.length; i++) {
+                    ctx.lineTo(spiralPoints[i].x, spiralPoints[i].y);
+                }
+            }
+            ctx.strokeStyle = `rgba(0, 255, 255, ${0.3 + 0.5 * loadingProgress})`; // Hellblau, Transparenz nimmt zu
+            ctx.lineWidth = 1 + loadingProgress; // Dicke nimmt leicht zu
+            ctx.stroke();
+
+            // Den animierten Punkt zeichnen
+            // currentPointIndex muss relativ zur aktuellen Anzahl der Punkte sein
+            if (spiralPoints.length > 0) {
+                const currentPos = spiralPoints[currentPointIndex % spiralPoints.length];
+                const colorIndex = currentPointIndex % colors.length; // RGB-Farbenzyklus
+                ctx.beginPath();
+                ctx.arc(currentPos.x, currentPos.y, 5, 0, Math.PI * 2); // Punktgröße 5
+                ctx.fillStyle = colors[colorIndex]; // Farbe aus dem RGB-Array
+                ctx.fill();
+            }
+            
+            currentPointIndex = (currentPointIndex + 1); // Nächster Punkt im Kreis
+
+            animationFrameId = requestAnimationFrame(animateSpiral);
+        }
+
+        // Animation starten, sobald das DOM geladen ist
         document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('tesseract-container');
-            if (container) {
-                const tesseract = new TesseractAnimation(container);
-                tesseract.start();
-            } else {
-                console.error('Container element for Tesseract animation not found!');
-            }
+            animateSpiral(); // Startet die Animation und die Berechnung
         });
-    </script>
+
+        // Optional: Animation stoppen, wenn die Hauptanwendung geladen ist
+        // Dies müsste über eine globale Variable oder ein Event in main.jsx gesteuert werden.
+        // Beispiel: window.stopLoadingAnimation = () => cancelAnimationFrame(animationFrameId);
+    </script> 
+    
+    <!-- Hier wird Ihr Haupt-JavaScript/TypeScript-Bundle geladen,
+         das Ihre React-Anwendung und die O3DE-Initialisierung startet. -->
+    <script type="module" src="/src/main.jsx"></script> 
 </body>
 </html>
