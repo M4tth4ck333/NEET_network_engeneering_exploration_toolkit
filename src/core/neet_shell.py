@@ -12,7 +12,7 @@ class NEETShell(cmd2.Cmd):
     Dies ist der CLI-basierte Jan, der direkt mit dem CoreContextManager interagiert.
     """
     # Überladene cmd2-Attribute
-    intro = "\n🌐 Willkommen im NEET-OS Sphärischen Klassenzimmer (Jan CLI) 🌐\nType 'help' for commands.\n"
+    intro = "\n🌐 Willkommen im NEET-OS 🌐\nType 'help' for commands.\n"
     prompt = "NEET-OS> "
     
     # Farben für die Shell-Ausgabe
