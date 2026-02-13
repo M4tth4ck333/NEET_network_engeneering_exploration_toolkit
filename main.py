@@ -54,7 +54,7 @@ def main():
         print(f"API läuft auf http://localhost:{args.api_port}")
 
         if args.mode == 'ui':
-            print("\nDas 'Sphärische Klassenzimmer' (Frontend) sollte nun in Ihrem Browser unter")
+            print("\nDas 'Die AST-GFX-API' (Frontend) sollte nun in Ihrem Browser unter")
             print(f"http://localhost:{args.api_port} verfügbar sein.")
             print("Drücken Sie Strg+C, um das System zu beenden.")
             # Halte das Hauptprogramm am Laufen, damit der Hintergrund-Server läuft
