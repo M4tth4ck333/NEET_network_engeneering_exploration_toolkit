@@ -1,5 +1,5 @@
 ## NEET_network_engeneering_exploration_toolkit: Projektstruktur
-Dieses Dokument beschreibt die Verzeichnisstruktur des Prometheus OS Frameworks, auch bekannt als NEET (Network Exploration & Engineering Toolkit). Es ist ein Manifest der modularen Architektur, die die Vision einer "technologischen Republik" und des Mottos "Pluribus Unum Exivi" (Aus vielen Eines hervorgegangen) widerspiegelt.
+Dieses Dokument beschreibt die Verzeichnisstruktur des NEET Framework, auch bekannt als NEET (Network Exploration & Engineering Toolkit). Es ist ein Manifest der modularen Architektur, die die Vision einer "technologischen Republik" und des Mottos "Pluribus Unum Exivi" (Aus vielen ist Eines hervorgegangen) widerspiegelt.
 
 # Jedes Verzeichnis repräsentiert eine "Wohnmonade" oder einen Baustein in unserem lebendigen, digitalen Organismus.
 
