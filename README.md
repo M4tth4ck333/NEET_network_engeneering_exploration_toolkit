@@ -23,7 +23,8 @@ Jede hierarchische Ebene des Systems wird durch einen **spezifischen Nullvektor*
 
 Der **Tesseract** 🧊 dient als primäre, immersive Benutzeroberfläche des NEET-OS, revolutionär in seiner Konzeption als **4D-Desktop**.
 
-* Die visuelle Darstellung erfolgt mittels **Unreal Engine 5/6** 🎮, wobei **Compiz** 🌈 in Übergangsphasen zur dynamischen visuellen Komposition beitragen kann, um flüssige Übergänge und Effekte zu gewährleisten.
+* Die visuelle Darstellung erfolgt mittels **Unreal Engine 5/6 & pyxel & open3dengine ** 🎮, wobei **Compiz** 🌈 in Übergangsphasen zur dynamischen visuellen Komposition beitragen kann,
+* um flüssige Übergänge und Effekte zu gewährleisten.
 * Das Interface präsentiert sich als eine halb offene, kartesische Darstellung eines Würfels, dessen innere Flächen jeweils ein **5x5-Fensterraster** 🔲 umfassen.
 * Dieses Raster repräsentiert die **25 Varianzräume**, die als aktive Dimensionen der Datenorganisation dienen.
 * Ein dediziertes Fenster fungiert als **"Standfuß"** 🦶 des Systems, symbolisierend dessen Verankerung und Stabilität im digitalen Raum.
